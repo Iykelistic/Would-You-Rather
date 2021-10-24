@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +69,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+=======
+# Would-You-Rather
+Would you rather is a polling game that presents the user with a series of questions that can be answered one of two ways. it's built with React, Redux, React Router, &amp; Redux Thunk.
+>>>>>>> f17ee9ea3fbfe4920a9043eb6a3bc2cce524136a
