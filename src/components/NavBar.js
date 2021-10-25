@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   Menu,
   Responsive,
@@ -9,20 +9,16 @@ import {
   Button,
   Container
 } from 'semantic-ui-react';
-import { navUsers } from './_data';
+import { setAuthUser } from '../actions/authUser';
 
-class Nav extends Component {
-  static propTypes = {
-    onLogout: PropTypes.func.isRequired,
-    user: PropTypes.string.isRequired
-  };
+class NavBar extends Component {
   handleLogout = e => {
     e.preventDefault();
-    this.props.onLogout();
+    this.props.setAuthUser(null);
   };
 
   render() {
-    const { user } = this.props;
+    const { authUser, users } = this.props;
 
     return (
       <Container>
@@ -34,12 +30,12 @@ class Nav extends Component {
             <Menu.Item>
               <span>
                 <Image
-                  src={`/images/avatars/${navUsers[user].avatar.name}.png`}
+                  src={users[authUser].avatarURL}
                   avatar
                   spaced="right"
                   verticalAlign="bottom"
                 />
-                {navUsers[user].name}
+                {users[authUser].name}
               </span>
             </Menu.Item>
             <Menu.Item>
@@ -60,12 +56,12 @@ class Nav extends Component {
             <Grid.Row>
               <Grid.Column>
                 <Image
-                  src={`/images/avatars/${navUsers[user].avatar.name}.png`}
+                  src={users[authUser].avatarURL}
                   avatar
                   spaced="right"
                   verticalAlign="bottom"
                 />
-                {navUsers[user].name}
+                {users[authUser].name}
               </Grid.Column>
               <Grid.Column verticalAlign="bottom" textAlign="right">
                 <Button
@@ -85,9 +81,9 @@ class Nav extends Component {
                   <Menu.Item name="home" as={NavLink} to="/" exact />
                   <Menu.Item name="new poll" as={NavLink} to="/add" />
                   <Menu.Item
-                    name="leader board"
+                    name="leader rank"
                     as={NavLink}
-                    to="/leaderboard"
+                    to="/leaderRank"
                   />
                 </Menu>
               </Grid.Column>
@@ -99,12 +95,12 @@ class Nav extends Component {
             <Grid.Row>
               <Grid.Column>
                 <Image
-                  src={`/images/avatars/${navUsers[user].avatar.name}.png`}
+                  src={users[authUser].avatarURL}
                   avatar
                   spaced="right"
                   verticalAlign="bottom"
                 />
-                {navUsers[user].name}
+                {users[authUser].name}
                 <Button
                   content="Logout"
                   labelPosition="right"
@@ -123,9 +119,9 @@ class Nav extends Component {
                   <Menu.Item name="home" as={NavLink} to="/" exact />
                   <Menu.Item name="new poll" as={NavLink} to="/add" />
                   <Menu.Item
-                    name="leader board"
+                    name="leader rank"
                     as={NavLink}
-                    to="/leaderboard"
+                    to="/leaderRank"
                   />
                 </Menu>
               </Grid.Column>
@@ -137,4 +133,14 @@ class Nav extends Component {
   }
 }
 
-export default Nav;
+function mapStateToProps({ users, authUser }) {
+  return {
+    authUser,
+    users
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { setAuthUser }
+)(NavBar);

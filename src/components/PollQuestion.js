@@ -5,22 +5,27 @@ import { Header, Button, Form, Radio } from 'semantic-ui-react';
 import { handleSaveQuestionAnswer } from '../actions/users';
 
 export class PollQuestion extends Component {
+  
   static propTypes = {
     authUser: PropTypes.string.isRequired,
     handleSaveQuestionAnswer: PropTypes.func.isRequired,
     question: PropTypes.object.isRequired
   };
+
+
   state = {
     value: ''
   };
 
   handleChange = (e, { value }) => this.setState({ value });
 
-  handleSubmit = e => {
-    e.preventDefault();
-    if (this.state.value !== '') {
+  handleSubmit = event => {
+
+    event.preventDefault();
+    const { value } = this.state;
+    if (value !== '') {
       const { authUser, question, handleSaveQuestionAnswer } = this.props;
-      handleSaveQuestionAnswer(authUser, question.id, this.state.value);
+      handleSaveQuestionAnswer(authUser, question.id, value);
     }
   };
 
@@ -65,10 +70,9 @@ export class PollQuestion extends Component {
   }
 }
 
-function mapStateToProps({ authUser }, { match }) {
-  // const { question_id } = match.params;
-  // const question = questions[question_id];
 
+function mapStateToProps({ authUser }, { match }) {
+  
   return {
     authUser
   };
@@ -78,4 +82,4 @@ export default connect(
   mapStateToProps,
   { handleSaveQuestionAnswer }
 )(PollQuestion);
-// export default PollQuestion;
+

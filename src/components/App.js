@@ -4,11 +4,11 @@ import { Grid } from 'semantic-ui-react';
 import { handleInitialData } from '../actions/shared';
 import { connect } from 'react-redux';
 import Login from './Login';
-import Nav from './Nav';
+import NavBar from './NavBar';
 import Home from './Home';
 import UserCard from './UserCard';
-import NewPoll from './NewPoll';
-import Leaderboard from './Leaderboard';
+import Poll from './Poll';
+import LeaderRank from './LeaderRank';
 import NoMatch from './NoMatch';
 
 class App extends Component {
@@ -30,14 +30,14 @@ class App extends Component {
             />
           ) : (
             <Fragment>
-              <Nav />
+              <NavBar />
               <ContentGrid>
                 <Switch>
                   <Route exact path="/" component={Home} />
                   <Route path="/questions/bad_id" component={NoMatch} />
                   <Route path="/questions/:question_id" component={UserCard} />
-                  <Route path="/add" component={NewPoll} />
-                  <Route path="/leaderboard" component={Leaderboard} />
+                  <Route path="/add" component={Poll} />
+                  <Route path="/leaderboard" component={LeaderRank} />
                   <Route component={NoMatch} />
                 </Switch>
               </ContentGrid>

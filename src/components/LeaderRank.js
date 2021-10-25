@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react';
+import PropType from 'prop-types';
+import { connect } from 'react-redux';
 import {
   Segment,
   Grid,
@@ -7,38 +9,25 @@ import {
   Label,
   Divider
 } from 'semantic-ui-react';
-import { leaderboardData, users } from './_data';
 
 const trophyColor = ['yellow', 'grey', 'orange'];
 
-export class Leaderboard extends Component {
-  componentDidMount = () => {
-    // console.log(users);
-    // console.log('Object.keys(users)', Object.keys(users));
-    // console.log('Object.values(users)', Object.values(users));
-    // shape data
-    const newArr = Object.values(users)
-      .map(user => ({
-        name: user.name,
-        answerCount: Object.values(user.answers).length,
-        questionCount: user.questions.length,
-        total: Object.values(user.answers).length + user.questions.length
-      }))
-      .sort((a, b) => a.total - b.total)
-      .reverse();
-
-    console.log('newArr', newArr);
+export class LeaderRank extends Component {
+  static propType = {
+    leaderboardData: PropType.array.isRequired
   };
   render() {
+    const { leaderRankData } = this.props;
+
     return (
       <Fragment>
-        {leaderboardData.map((user, idx) => (
+        {leaderRankData.map((user, idx) => (
           <Segment.Group key={user.id}>
             <Label corner="left" icon="trophy" color={trophyColor[idx]} />
             <Grid divided padded>
               <Grid.Row>
                 <Grid.Column width={4} verticalAlign="middle">
-                  <Image src={`/images/avatars/${user.avatar}`} />
+                  <Image src={user.avatarURL} />
                 </Grid.Column>
                 <Grid.Column width={8}>
                   <Header as="h3" textAlign="left">
@@ -73,4 +62,22 @@ export class Leaderboard extends Component {
   }
 }
 
-export default Leaderboard;
+function mapStateToProps({ users }) {
+  const leaderRankData = Object.values(users)
+    .map(user => ({
+      id: user.id,
+      name: user.name,
+      avatarURL: user.avatarURL,
+      answerCount: Object.values(user.answers).length,
+      questionCount: user.questions.length,
+      total: Object.values(user.answers).length + user.questions.length
+    }))
+    .sort((a, b) => a.total - b.total)
+    .reverse()
+    .slice(0, 3);
+  return {
+    leaderRankData
+  };
+}
+
+export default connect(mapStateToProps)(LeaderRank);

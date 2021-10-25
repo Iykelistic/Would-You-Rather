@@ -13,7 +13,7 @@ import {
 } from 'semantic-ui-react';
 import { handleSaveQuestion } from '../actions/questions';
 
-export class NewPoll extends Component {
+export class Poll extends Component {
   static propTypes = {
     authUser: PropTypes.string.isRequired,
     handleSaveQuestion: PropTypes.func.isRequired
@@ -24,11 +24,11 @@ export class NewPoll extends Component {
     option1: '',
     option2: ''
   };
-  handleChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
+  handleChange = event => {
+    this.setState({ [event.target.id]: event.target.value });
   };
-  handleSubmit = e => {
-    e.preventDefault();
+  handleSubmit = event => {
+    event.preventDefault();
     const { authUser, handleSaveQuestion } = this.props;
     const { option1, option2 } = this.state;
 
@@ -102,4 +102,4 @@ function mapStateToProps({ authUser }) {
 export default connect(
   mapStateToProps,
   { handleSaveQuestion }
-)(NewPoll);
+)(Poll);
